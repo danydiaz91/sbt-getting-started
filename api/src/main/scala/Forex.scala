@@ -1,3 +1,6 @@
+import org.json4s.JsonDSL._
+import org.json4s.native.JsonMethods._
+
 import scala.collection.immutable
 import scala.xml._
 
@@ -10,6 +13,8 @@ object Forex {
     val euroToCurrencyMultipliers: immutable.Seq[Double] = (xmlResponse \\ "@rate").map(node => node.text.toDouble)
     (currencyCodes zip euroToCurrencyMultipliers).toMap
   }
+
+  def getRatesAsJson(): String = compact(render(getExchangeRates()))
 
   def main(args: Array[String]): Unit = {
     println(getExchangeRates())
